@@ -76,6 +76,7 @@ const pullAndDeploy = (homePath,folderName,cloneUrl)=>{
 			// shell.exit(1);
             return;
 		}
+        console.log('pull fetch completed!')
 	}
     else{
 		shell.cd(homePath);
@@ -86,6 +87,7 @@ const pullAndDeploy = (homePath,folderName,cloneUrl)=>{
         }
 		shell.cd(repoFullPath);
     }
+    console.log('cd folder then run npm i',repoFullPath)
     shell.cd(repoFullPath);
     shell.rm('-rf','node_modules package-lock.json');
     if (shell.exec('npm i').code !== 0) {
@@ -93,6 +95,7 @@ const pullAndDeploy = (homePath,folderName,cloneUrl)=>{
         // shell.exit(1);
         return;
     }
+    console.log('npm i done! deploying....');
     const cmd = shell.exec('pm2-meteor deploy');
     if (cmd.code !== 0) {
         console.log(cmd,cmd.code);
@@ -100,5 +103,5 @@ const pullAndDeploy = (homePath,folderName,cloneUrl)=>{
         // shell.exit(1);
         return;
     }
-    console.log('success:',cloneUrl);
+    console.log('deploy success:',cloneUrl);
 }
