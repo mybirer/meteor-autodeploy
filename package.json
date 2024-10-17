@@ -1,0 +1,25 @@
+{
+  "name": "meteor-autodeploy",
+  "version": "1.0.0",
+  "description": "Auto deploy meteor projects when git push event occurs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mybirer/meteor-autodeploy.git"
+  },
+  "author": "MyBirer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mybirer/meteor-autodeploy/issues"
+  },
+  "homepage": "https://github.com/mybirer/meteor-autodeploy#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "http": "0.0.1-security",
+    "shelljs": "^0.8.5"
+  }
+}
