@@ -84,14 +84,16 @@ const pullAndDeploy = (homePath,folderName,cloneUrl)=>{
         }
 		shell.cd(repoFullPath);
     }
-    
+    shell.cd(repoFullPath);
     shell.rm('-rf','node_modules package-lock.json');
     if (shell.exec('npm i').code !== 0) {
         shell.echo('Error: npm install failed');
         // shell.exit(1);
         return;
     }
-    if (shell.exec('pm2-meteor deploy').code !== 0) {
+    const cmd = shell.exec('pm2-meteor deploy');
+    if (cmd.code !== 0) {
+        console.log(cmd,cmd.code);
         shell.echo('Error: pm2-meteor deploy failed');
         // shell.exit(1);
         return;

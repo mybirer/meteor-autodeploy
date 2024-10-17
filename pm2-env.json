@@ -3,6 +3,7 @@
       {
         "name": "meteor-autodeploy",
         "env": {
+            "METEOR_ALLOW_SUPERUSER":"1"
         },
         "script": "/home/commonlive/meteor-autodeploy/index.js",
         "exec_mode": "cluster_mode",
