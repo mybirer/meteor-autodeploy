@@ -43,7 +43,7 @@ app.post('/git-webhook', function (req, res) {
     res.json({ success: true, message: 'Acknowledged' });
 
 	const folderName = body.repository.name;
-    pullAndDeploy(config.repoHomePath,folderName,body.clone_url);
+    pullAndDeploy(config.repoHomePath,folderName,body.repository.clone_url);
 
 });
 app.use(function (error, req, res, next) {

@@ -1,0 +1,13 @@
+{
+    "apps": [
+      {
+        "name": "meteor-autodeploy",
+        "env": {
+        },
+        "script": "/home/commonlive/meteor-autodeploy/index.js",
+        "exec_mode": "cluster_mode",
+        "instances": "1"
+      }
+    ]
+  }
+  
