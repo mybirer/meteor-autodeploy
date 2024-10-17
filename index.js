@@ -42,6 +42,7 @@ app.post('/git-webhook', function (req, res) {
     res.status(200);
     res.json({ success: true, message: 'Acknowledged' });
 
+    console.log('webhook received:',body.repository.clone_url)
 	const folderName = body.repository.name;
     pullAndDeploy(config.repoHomePath,folderName,body.repository.clone_url);
 
@@ -67,10 +68,11 @@ app.use(function (error, req, res, next) {
 
 const pullAndDeploy = (homePath,folderName,cloneUrl)=>{
 	const repoFullPath = path.join(homePath, folderName);
+    console.log('repoFullPath',repoFullPath);
 	if (fs.existsSync(repoFullPath)) {
 		shell.cd(repoFullPath);
 		if (shell.exec('git pull && git fetch').code !== 0) {
-			shell.echo('Error: Git pull and fetch failed');
+			shell.echo('Error: Git pull and fetch failed:',repoFullPath);
 			// shell.exit(1);
             return;
 		}
@@ -78,7 +80,7 @@ const pullAndDeploy = (homePath,folderName,cloneUrl)=>{
     else{
 		shell.cd(homePath);
         if (shell.exec(`git clone ${cloneUrl}`).code !== 0) {
-            shell.echo('Error: git clone failed');
+            shell.echo('Error: git clone failed:',cloneUrl);
             // shell.exit(1);z
             return;
         }
@@ -87,16 +89,16 @@ const pullAndDeploy = (homePath,folderName,cloneUrl)=>{
     shell.cd(repoFullPath);
     shell.rm('-rf','node_modules package-lock.json');
     if (shell.exec('npm i').code !== 0) {
-        shell.echo('Error: npm install failed');
+        shell.echo('Error: npm install failed:',repoFullPath);
         // shell.exit(1);
         return;
     }
     const cmd = shell.exec('pm2-meteor deploy');
     if (cmd.code !== 0) {
         console.log(cmd,cmd.code);
-        shell.echo('Error: pm2-meteor deploy failed');
+        shell.echo('Error: pm2-meteor deploy failed:',repoFullPath);
         // shell.exit(1);
         return;
     }
-    console.log('success!');
+    console.log('success:',cloneUrl);
 }
